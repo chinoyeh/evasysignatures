@@ -1,38 +1,52 @@
-import React,{useState} from 'react'
-import { getDownloadURL, uploadBytes, ref as sRef} from '../../firebase'
-import {Modal, ModalBody, Button} from 'reactstrap'
+import React, { useEffect,useState } from 'react'
+// import { getStorage, ref } from "firebase/storage";
 import Navbar from '../utils/Navbar'
+import { useSelector, useDispatch } from "react-redux"
 import {Link} from "react-router-dom";
-import {Data} from '../utils/Data'
+import { db,storage} from'../../firebase'
+import {set, ref,onValue} from 'firebase/database'
+import EmptyCart from '../../assets/icons/emptycart.svg'
+import { getdetails } from '../../actions';
+// import {GownItem} from '../utils/Data'
 import './css/Store.css'
 
-const Fashionstore = () => {
-    const [order_modal, setOrder_modal] = useState(false)
-    const [order_item, setOrder_item] = useState({})
+const Gown = () => {
+
+    const [gown_details, setGown_details] =useState([])
+    const details  = useSelector(state => state.detailsReducer)
+    const dispatch = useDispatch()
+    console.log(details)
 
 
-    const order_tog = (datas)=>{
-                setOrder_modal(!order_modal)
-                setOrder_item(datas)
-                console.log(order_item, 'item')
-    }
 
-
+useEffect(()=>{
+ 
+      
+           dispatch(getdetails())
+ 
+        
+  
+     
+}, [])
+  
   return (
   <React.Fragment>
       <Navbar/>
 
  {/* /* <!-- Header Section End -->
-
+<
     <!-- Breadcrumb Begin --> */} 
+    <button onClick={()=> dispatch(getdetails())}>
+        click
+    </button>
     <div class="breadcrumb-option">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <Link to ='/'><i class="fa fa-home"></i> Home</Link>
-                        <span>Store</span>
-                   
+                        <span><Link to ='/store'>Store</Link></span>
+                        <span>Gown </span>
                     </div>
                 </div>
             </div>
@@ -59,7 +73,7 @@ const Fashionstore = () => {
                                         <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
-                                                <li><Link to='/shirt'>Adult</Link></li>
+                                                    <li><Link to='/shirt'>Adult</Link></li>
                                                     <li><a href="#">Kids</a></li>
                                                  
                                                 </ul>
@@ -73,7 +87,7 @@ const Fashionstore = () => {
                                         <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
-                                                    <li><Link to='/gown'>Adult</Link></li>
+                                                    <li><a href="#">Adult</a></li>
                                                     <li><a href="#">Kids</a></li>
                                         
                                                 </ul>
@@ -110,27 +124,40 @@ const Fashionstore = () => {
                                 </div>
                             </div>
                         </div>
-          
+           
                   
                     </div>
                 </div>
-                <div className="col-lg-9 col-md-9">
+                <div class="col-lg-9 col-md-9">
+               
                  
-                       <div className="row-store ">
-                            {Data.map((datas)=>{
+                      
+                           {
+                               details.length===1 &&
+                               <div className ='no-item'>
+                                   <img src ={EmptyCart} alt ="/"/>
+                                   <h5>No Items Available</h5>
+                                   </div>
+                           }
+                         {
+                               details.length!==1 &&
+                              
+                               <div className="row-store ">
+                                   {/* {details.map((datas)=>{
                                 const {id, title, image, price,tag}= datas
-                                return     <div className="product__item">
+                                return     <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="https://mockuptree.com/wp-content/uploads/edd/2018/11/Free-Modern-Girl-Dress-Mockup-PSD.jpg">
                                     <img className ='product-image'src={image} alt ='/'/>
                                   {tag ==='New'&&
-                                    <div className="label new">New</div>
+                                    <div class="label new">New</div>
                                     }
                                        {tag ==='Sale'&&
-                                      <div className="label sale">Sale</div>
+                                      <div class="label sale">Sale</div>
                                 }
                                     <ul class="product__hover">
-                                   
-                                        <li  onClick={()=>order_tog(datas)}><a href="#"><span><i className ='fa fa-cart-plus'></i></span></a></li>
+                                        <li><a href={image} class="image-popup"><span class="arrow_expand"></span></a></li>
+ 
+                                        <li><a href="#"><span><i className ='fa fa-cart-plus'></i></span></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
@@ -139,9 +166,11 @@ const Fashionstore = () => {
                                     <div class="product__price">N{price}.0</div>
                                 </div>
                             </div>
-                            })}
-                       
-                        </div>
+                            })} */}
+                            </div>
+                           }
+                        
+                   
                   
                     <div class="row">
                      
@@ -180,40 +209,8 @@ const Fashionstore = () => {
             </form>
         </div>
     </div>
-
-
-
-    <Modal
-    isOpen={order_modal}
-    toggle ={order_tog}
-    centered
-    className='order'
-    >
-        <ModalBody>
-            <div className='order-image'>
-                <img src={order_item.image} alt ='/'/>
-            </div>
-            <h4> Name : {order_item.title}</h4>
-            <h4> Price:  N{order_item.price}.00</h4>   
-          <div className='order-button'> 
-          <Button
-          color='white'
-            onClick={order_tog}
-            
-            >
-            
-                Cancel
-                </Button>       
-                <Button
-                color='	#FFD700'>
-                Add <i className='fa fa-shopping-cart'></i>
-                </Button>   
-          </div>
-         
-        </ModalBody>
-        </Modal>
 </React.Fragment>
   )
 }
 
-export default Fashionstore
+export default Gown

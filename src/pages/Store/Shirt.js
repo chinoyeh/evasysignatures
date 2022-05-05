@@ -2,7 +2,7 @@ import React from 'react'
 // import { getStorage, ref } from "firebase/storage";
 import Navbar from '../utils/Navbar'
 import {Link} from "react-router-dom";
-import {Gown} from '../utils/Data'
+import {GownItem} from '../utils/Data'
 import './css/Store.css'
 
 const Fashionstore = () => {
@@ -123,7 +123,7 @@ const Fashionstore = () => {
                 <div class="col-lg-9 col-md-9">
                  
                        <div className="row-store ">
-                            {Gown.map((datas)=>{
+                            {GownItem.map((datas)=>{
                                 const {id, title, image, price,tag}= datas
                                 return     <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="https://mockuptree.com/wp-content/uploads/edd/2018/11/Free-Modern-Girl-Dress-Mockup-PSD.jpg">

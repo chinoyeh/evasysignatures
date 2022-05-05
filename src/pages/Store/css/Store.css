@@ -32,3 +32,12 @@
 	background: 	#FFD700;
     margin-left: 2em;
 }
+
+
+
+/* category styling */
+
+.no-item{
+text-align: center;
+margin: 3em auto;
+}
