@@ -13,6 +13,7 @@ import './css/Store.css'
 const Gown = () => {
 
     const [gown_details, setGown_details] =useState([])
+  
     const details  = useSelector(state => state.detailsReducer)
     const dispatch = useDispatch()
     console.log(details)
@@ -20,13 +21,16 @@ const Gown = () => {
 
 
 useEffect(()=>{
- 
-      
-           dispatch(getdetails())
- 
-        
-  
-     
+    const ids = 'l2sw9uwbtg4x7hsybaq'
+    const categorys = 'Gown'
+    const dbRef = ref(db, categorys + '/' + ids)
+    
+    onValue(dbRef, (snapshot)=>{
+        var data = snapshot.val()
+
+           dispatch(getdetails(data))
+    })
+
 }, [])
   
   return (

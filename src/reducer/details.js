@@ -5,31 +5,22 @@ import {set, ref,onValue} from 'firebase/database'
 
 
 
-const gowndetails =[{}]
+const INITIAL_STATE = {
+    gown_details :{}
+}
 
-
-const detailsReducer =(state=gowndetails, action )=>{
+const detailsReducer =(state=INITIAL_STATE, action )=>{
     switch(action.type){
        
 
         case 'GET_DETAILS':
-            const ids = 'l2sw9uwbtg4x7hsybaq'
-    const categorys = 'Gown'
-    const dbRef = ref(db, categorys + '/' + ids)
-
-     onValue(dbRef, (snapshot)=>{
-            var data = snapshot.val()
-          
+         
+  
             return [
                 ...state,
-                {data}
+         
             ]
-               
-     
-           
-        })
-        
-     
+                   
                   
 
                    

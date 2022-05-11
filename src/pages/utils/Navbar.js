@@ -39,7 +39,7 @@ const Navbar = () => {
                     <nav class="header__menu">
                         <ul>
                             <li className="active"><Link to= '/'>Home</Link></li>
-                            <li><Link to ='/store'>Be Spoken</Link></li>
+                            <li><Link to ='/bespoken'>Be Spoken</Link></li>
                             <li><Link to ='/store'>Fashion Store</Link></li>
                       
                        

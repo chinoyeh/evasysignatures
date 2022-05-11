@@ -11,6 +11,7 @@ import Home from './pages/Home/Home'
 import Fashionstore from './pages/Store/Fashionstore';
 import Shirt from './pages/Store/Shirt'
 import Gown from './pages/Store/Gown'
+import Bespoken from './pages/Bespoken/Bespoken';
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path ='/store' element={<Fashionstore/>}/>
           <Route path ='/shirt' element={<Shirt/>}/>
           <Route path ='/gown' element={<Gown/>}/>
+          <Route path = '/bespoken' element ={<Bespoken/>}/>
       
         </Routes>
               
